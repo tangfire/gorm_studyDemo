@@ -7,11 +7,19 @@ import (
 )
 
 type UserModel struct {
+	ID              int
+	Name            string           `gorm:"size:16;not null;unique"`
+	Age             int              `gorm:"default:18"`
+	UserDetailModel *UserDetailModel `gorm:"foreignkey:UserID"`
+	CreatedAt       time.Time
+	DeletedAt       gorm.DeletedAt
+}
+
+type UserDetailModel struct {
 	ID        int
-	Name      string `gorm:"size:16;not null;unique"`
-	Age       int    `gorm:"default:18"`
-	CreatedAt time.Time
-	DeletedAt gorm.DeletedAt
+	UserID    int        `grom:"unique"`
+	UserModel *UserModel `gorm:"foreignkey:UserID"`
+	Email     string     `gorm:"size:32"`
 }
 
 func (u *UserModel) BeforeCreate(scope *gorm.DB) error {
