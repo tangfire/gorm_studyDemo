@@ -28,3 +28,8 @@ func (u *UserModel) BeforeDelete(scope *gorm.DB) error {
 	fmt.Println("BeforeDelete")
 	return nil
 }
+
+func (u *UserModel) AfterFind(tx *gorm.DB) (err error) {
+	fmt.Println("查询钩子")
+	return
+}

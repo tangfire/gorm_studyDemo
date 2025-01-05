@@ -184,10 +184,85 @@ func HighQuery() {
 	//global.DB.Debug().Not("age > 18").Find(&userList)
 	//fmt.Println(userList)
 
-	var userList []models.UserModel
-	global.DB.Debug().Order("age desc").Find(&userList)
-	//global.DB.Debug().Order("age asc").Order("id desc").Find(&userList)
-	fmt.Println(userList)
+	//var userList []models.UserModel
+	//global.DB.Debug().Order("age desc").Find(&userList)
+	////global.DB.Debug().Order("age asc").Order("id desc").Find(&userList)
+	//fmt.Println(userList)
+
+	//var nameList []string
+	//global.DB.Model(models.UserModel{}).Select("name").Scan(&nameList)
+	//fmt.Println(nameList)
+
+	//var nameList []string
+	//global.DB.Model(models.UserModel{}).Pluck("name", &nameList)
+	//fmt.Println(nameList)
+
+	//type User struct {
+	//	Name string `gorm:"column:name"`
+	//	Age  int    `gorm:"column:age"`
+	//}
+	//
+	//var userList []User
+	//global.DB.Model(models.UserModel{}).Scan(&userList)
+	//fmt.Println(userList)
+
+	//type UserCount struct {
+	//	Age    int
+	//	Counut int
+	//}
+	//
+	//var list []UserCount
+	//global.DB.Model(models.UserModel{}).Group("age").Select("age", "count(id) as count").Scan(&list)
+	//fmt.Println(list)
+
+	//var ageList []int
+	//global.DB.Model(models.UserModel{}).Distinct("age").Pluck("age", &ageList)
+	//fmt.Println(ageList)
+
+	//var userList []models.UserModel
+
+	//global.DB.Limit(2).Offset(0).Find(&userList)
+	//fmt.Println(userList)
+	//
+	//global.DB.Limit(2).Offset(2).Find(&userList)
+	//fmt.Println(userList)
+	//
+	//global.DB.Limit(2).Offset(4).Find(&userList)
+	//fmt.Println(userList)
+
+	//limit := 2
+	//page := 1
+	//
+	//global.DB.Limit(limit).Offset((page - 1) * limit).Find(&userList)
+	//fmt.Println(userList)
+
+	//var userList []models.UserModel
+	////global.DB.Scopes(Age18).Find(&userList)
+	//global.DB.Scopes(NameIn("firefire", "fg")).Find(&userList)
+	//fmt.Println(userList)
+
+	type User struct {
+		Name string
+		Age  int
+	}
+
+	var users []User
+
+	global.DB.Raw("select name,age from user_models").Scan(&users)
+	fmt.Println(users)
+
+	global.DB.Exec("update user_models set age=? where id=?", 22, 3)
+
+}
+
+func NameIn(nameList ...string) func(db *gorm.DB) *gorm.DB {
+	return func(tx *gorm.DB) *gorm.DB {
+		return tx.Where("name in ?", nameList)
+	}
+}
+
+func Age18(tx *gorm.DB) *gorm.DB {
+	return tx.Where("age > 18")
 }
 
 //更新
