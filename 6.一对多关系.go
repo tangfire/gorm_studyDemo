@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gorm_studyDemo/global"
 	"gorm_studyDemo/models"
 )
@@ -43,12 +42,31 @@ func oneToMany() {
 	//fmt.Println(girl.Name, girl.BoyList, len(girl.BoyList))
 
 	// 专门查关联
+	//var girl models.GirlModel
+	//global.DB.Take(&girl, "name = ?", "xiaomei")
+	//var boyList []models.BoyModel
+	//
+	//global.DB.Model(&girl).Association("BoyList").Find(&boyList)
+	//fmt.Println(boyList)
+
+	//var girl models.GirlModel
+	//global.DB.Take(&girl, "name = ?", "xiaomei")
+	//global.DB.Model(&girl).Association("BoyList").Replace([]models.BoyModel{
+	//	{ID: 1},
+	//})
+
+	//var girl models.GirlModel
+	//global.DB.Take(&girl, "name = ?", "xiaomei")
+	//global.DB.Model(&girl).Association("BoyList").Append([]models.BoyModel{
+	//	{ID: 2},
+	//	{ID: 3},
+	//})
+
 	var girl models.GirlModel
 	global.DB.Take(&girl, "name = ?", "xiaomei")
-	var boyList []models.BoyModel
-
-	global.DB.Model(&girl).Association("BoyList").Find(&boyList)
-	fmt.Println(boyList)
+	global.DB.Model(&girl).Association("BoyList").Delete([]models.BoyModel{
+		{ID: 3},
+	})
 
 }
 
