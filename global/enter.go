@@ -11,7 +11,7 @@ import (
 var DB *gorm.DB
 
 func Migrate() {
-	err := DB.AutoMigrate(&models.UserModel{}, &models.UserDetailModel{})
+	err := DB.AutoMigrate(&models.UserModel{}, &models.UserDetailModel{}, &models.GirlModel{}, &models.BoyModel{})
 	if err != nil {
 		log.Fatalf("数据库迁移失败 %s", err)
 	}

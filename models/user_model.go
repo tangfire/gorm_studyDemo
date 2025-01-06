@@ -10,7 +10,7 @@ type UserModel struct {
 	ID              int
 	Name            string           `gorm:"size:16;not null;unique"`
 	Age             int              `gorm:"default:18"`
-	UserDetailModel *UserDetailModel `gorm:"foreignkey:UserID"`
+	UserDetailModel *UserDetailModel `gorm:"foreignkey:UserID;constraint:OnDelete:CASCADE"`
 	CreatedAt       time.Time
 	DeletedAt       gorm.DeletedAt
 }
@@ -18,7 +18,7 @@ type UserModel struct {
 type UserDetailModel struct {
 	ID        int
 	UserID    int        `grom:"unique"`
-	UserModel *UserModel `gorm:"foreignkey:UserID"`
+	UserModel *UserModel `gorm:"foreignkey:UserID;constraint:OnDelete:CASCADE"`
 	Email     string     `gorm:"size:32"`
 }
 
